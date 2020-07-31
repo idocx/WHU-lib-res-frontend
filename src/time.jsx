@@ -1,18 +1,12 @@
 import React, { useState } from "react";
 
-import { Slider, Tag, Row, Col } from "antd";
+import { Slider, Tag, Row, Col, message } from "antd";
 import "antd/dist/antd.css";
 
 import styled from "styled-components";
 
 const TimeSlider = styled.div`
-  margin: 0 25px;
-  margin-top: 5px;
-`;
-
-const TimeLabel = styled.label`
-  font-size: 16px;
-  text-align: center;
+  margin-bottom: 5px
 `;
 
 function formatTime(value) {
@@ -21,51 +15,47 @@ function formatTime(value) {
   return `${hour}:${minute}`
 }
 
-export default function ResTimeSlider({ defaultStart, defaultEnd }) {
+export default function ResTimeSlider({ defaultValue }) {
   const name = "time-slider",
         minTime = 480,
         maxTime = 1350,
         timeInterval = 30,
-        [startEndTime, setTime] = useState([defaultStart, defaultEnd]),
-        [warning, setWarning] = useState("");
+        [value, setValue] = useState(defaultValue);
 
-  const handleChange = (value) => {
-    setTime(value)
+  const handleChange = values => {
+    setValue(values);
+  }  
 
-    if (value[0] === value[1] || value[0] <= minTime || value[1] >= maxTime) {
-      setWarning(" (Invalid time range!)")
-    } else {
-      setWarning("")
-    }
+  const handleAfterChange = (values) => {
+    if (values[0] === values[1] || values[0] <= minTime || values[1] >= maxTime) {
+      message.error("Invalid time range!");
+    };
   }
   return (
     <TimeSlider>
       <Row align="middle">
         <Col span={7}>
-          <TimeLabel htmlFor={name}>起止时间：
-            <strong>
-              <Tag color="red">{formatTime(startEndTime[0])}</Tag>
-              ~&nbsp;&nbsp;
-              <Tag color="geekblue">{formatTime(startEndTime[1])}</Tag>
-            </strong>
-            {warning}
-          </TimeLabel>
+          <label className={"option-name"}>起止时间：
+            <Tag color="red">{formatTime(value[0])}</Tag>
+            ~&nbsp;&nbsp;
+            <Tag color="geekblue">{formatTime(value[1])}</Tag>
+          </label>
         </Col>
         <Col span={17}>
           <Slider
-            id={name}
+            id={name} 
             range
             min={minTime}
             max={maxTime}
             step={timeInterval}
             onChange={handleChange}
+            onAfterChange={handleAfterChange}
             tooltipPlacement="bottom"
-            defaultValue={[defaultStart, defaultEnd]}
+            defaultValue={defaultValue}
             tipFormatter={formatTime}
           />
         </Col>
       </Row>
-
     </TimeSlider>
   )
 }

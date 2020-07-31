@@ -1,25 +1,19 @@
 import React from "react";
 
-import { Radio, Space } from 'antd';
+import { Radio, Space, Col, Row } from 'antd';
 
 import "antd/dist/antd.css";
 
 import styled from "styled-components";
 
-const RadioDiv = styled(Space)`
-  display: flex;
-  display: -webkit-flex; /* Safari */
-  justify-content: center;
-`;
-
 const RadioSpace = styled(Space)`
-  align-items: baseline
+  align-items: baseline;
 `;
 
 const CustomRadio = ({ name, options, defaultValue, handleChange }) => {
   return (
-    <RadioSpace size={"large"}>
-      <strong>{name}</strong>
+    <RadioSpace size={40}>
+      <label className={"option-name"}>{name}</label> 
       <Radio.Group
         defaultValue={defaultValue}
         buttonStyle="solid"
@@ -37,21 +31,25 @@ const CustomRadio = ({ name, options, defaultValue, handleChange }) => {
   )
 }
 
-export default SeatOptionRadios = ( handleChange ) => {
+export default function SeatOptionRadios({ defaultWindow, defaultPlugger, windowOptions, pluggerOptions, handleChange }) {
   return (
-    <RadioDiv size={75}>
-      <CustomRadio
-        name={"是否靠窗"}
-        defaultValue={"c"}
-        options={[{value: "a", "label": "靠窗"}, {value: "b", "label": "不靠窗"}, {value: "c", "label": "不限"}]}
-        handleChage={handleChage}
-      />
-      <CustomRadio
-        name={"是否有插座"}
-        defaultValue={"c"}
-        options={[{value: "a", "label": "有插座"}, {value: "b", "label": "无插座"}, {value: "c", "label": "不限"}]}
-        handleChage={handleChage}
-      />
-    </RadioDiv>
+    <Row align={"middle"}>
+      <Col span={12}>
+        <CustomRadio
+          name={"是否靠窗"}
+          defaultValue={defaultWindow}
+          options={windowOptions}
+          handleChage={handleChange}
+        />
+      </Col>
+      <Col span={12}>
+        <CustomRadio
+          name={"是否有插座"}
+          defaultValue={defaultPlugger}
+          options={pluggerOptions}
+          handleChage={handleChange}
+        />
+      </Col>
+    </Row>
   )
 }

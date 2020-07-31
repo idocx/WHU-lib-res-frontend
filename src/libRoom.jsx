@@ -1,17 +1,28 @@
 import React from "react";
 
-import { Cascader } from 'antd';
+import { Cascader, Row, Col } from 'antd';
 
 import "antd/dist/antd.css";
 
-export default function LibRoomCascader({ defaultValue, options, handleChange }) {
+export default function LibRoomCascader({ defaultLibRoom, options, handleChange }) {
   return (
-    <Cascader 
-      expandTrigger="hover" 
-      options={options}
-      defaultValue={defaultValue}
-      onChange={handleChange}
-    />
+    <Row align={"middle"}>
+      <Col span={7}>
+        <label className={"option-name"}>
+          场馆选择
+        </label>
+      </Col>
+      <Col span={17}>
+        <Cascader 
+        expandTrigger={"hover"}
+        placeholder={"请选择"} 
+        options={options}
+        defaultValue={defaultLibRoom}
+        onChange={handleChange}
+        style={{ width: "100%" }}
+      />
+      </Col>
+    </Row>
   )
 }
 

@@ -27,16 +27,23 @@
     <title>React App</title>
     <style>
       #root {
-        margin: 35px auto;
-        width: 800px;
+        display: -webkit-flex; /* Safari */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 50px 75px;
       }
-
       .option-name {
         font-size: 15px;
         font-weight: bold;
       }
     </style>
   </head>
+  <style>
+    body {
+      height: 0 !important;
+    }
+  </style>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>

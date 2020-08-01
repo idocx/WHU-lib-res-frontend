@@ -29,10 +29,6 @@ const AppHeader = styled.div`
     height: 100%;
   }
 
-  .buttons {
-    
-  }
-
   div.closeWindow,
   div.minimizeWindow {
     -webkit-app-region: no-drag;
@@ -43,8 +39,8 @@ const AppHeader = styled.div`
     position: absolute;
     left: 50%;
     transform: translate(-50%,0);
-    color: #111;
-    font-size: 15px;
+    font-size: 14px;
+    font-weight: 400;
   }
 `;
 

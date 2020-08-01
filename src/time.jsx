@@ -27,8 +27,13 @@ export default function ResTimeSlider({ defaultValue }) {
   }  
 
   const handleAfterChange = (values) => {
-    if (values[0] === values[1] || values[0] <= minTime || values[1] >= maxTime) {
-      message.error("Invalid time range!");
+    if (values[0] === values[1] || values[0] < minTime || values[1] > maxTime) {
+      message.error("无效的时间！");
+      if (values[1] <= maxTime - 30) {
+        setValue([value[0], value[1]+30]);
+      } else if (values[0] >= minTime + 30) {
+        setValue([value[0]-30, value[1]]);
+      }
     };
   }
   return (
@@ -49,7 +54,7 @@ export default function ResTimeSlider({ defaultValue }) {
             onChange={handleChange}
             onAfterChange={handleAfterChange}
             tooltipPlacement="bottom"
-            defaultValue={defaultValue}
+            value={value}
             tipFormatter={formatTime}
           />
         </Col>

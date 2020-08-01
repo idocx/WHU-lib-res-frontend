@@ -13,7 +13,7 @@ const RadioSpace = styled(Space)`
 const CustomRadio = ({ name, options, defaultValue, handleChange }) => {
   return (
     <RadioSpace size={30}>
-      <label className={"option-name"}>{name}</label> 
+      <label className="option-name">{name}</label> 
       <Radio.Group
         defaultValue={defaultValue}
         buttonStyle="solid"
@@ -38,10 +38,10 @@ const CustomRadio = ({ name, options, defaultValue, handleChange }) => {
 
 export default function SeatOptionRadios({ defaultWindow, defaultPlugger, windowOptions, pluggerOptions, handleChange }) {
   return (
-    <Row align={"middle"}>
+    <Row align="middle">
       <Col span={12}>
         <CustomRadio
-          name={"是否靠窗"}
+          name="是否靠窗"
           defaultValue={defaultWindow}
           options={windowOptions}
           handleChage={handleChange}
@@ -49,7 +49,7 @@ export default function SeatOptionRadios({ defaultWindow, defaultPlugger, window
       </Col>
       <Col span={12}>
         <CustomRadio
-          name={"是否有插座"}
+          name="是否有插座"
           defaultValue={defaultPlugger}
           options={pluggerOptions}
           handleChage={handleChange}

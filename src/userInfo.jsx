@@ -65,6 +65,7 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, setUserInfo }) {
     closable={false}
     onClose={handleClose}
     visible={visible}
+    getContainer={document.getElementById("root")}
     width={300}
   >
     <Form

@@ -34,16 +34,12 @@ function createWindow () {
 }
 
 ipcMain.on('close', function () {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+  mainWindow.close()
 })
-
 
 ipcMain.on('min', function () {
   mainWindow.minimize();
 })
-
 
 app.on('ready', createWindow)
 

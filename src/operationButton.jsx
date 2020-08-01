@@ -16,9 +16,9 @@ const Buttons = styled(Space)`
 export default function OperationButtons() {
   return (
     <Buttons size={50}>
-      <Button type="secondary" shape={"round"}>保存信息</Button>
-      <Button type="primary" shape={"round"}>预约座位</Button>
-      <Button type="secondary" shape={"round"}>改签座位</Button>
+      <Button type="secondary" shape="round">保存信息</Button>
+      <Button type="primary" shape="round">预约座位</Button>
+      <Button type="secondary" shape="round">改签座位</Button>
     </Buttons>
   )
 }

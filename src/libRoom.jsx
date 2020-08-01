@@ -6,16 +6,16 @@ import "antd/dist/antd.css";
 
 export default function LibRoomCascader({ defaultLibRoom, options, handleChange }) {
   return (
-    <Row align={"middle"}>
+    <Row align="middle">
       <Col span={3}>
-        <label className={"option-name"}>
+        <label className="option-name">
           场馆选择
         </label>
       </Col>
       <Col span={15}>
         <Cascader 
-        expandTrigger={"hover"}
-        placeholder={"请选择"} 
+        expandTrigger="hover"
+        placeholder="请选择"
         options={options}
         defaultValue={defaultLibRoom}
         onChange={handleChange}

@@ -6,11 +6,29 @@ import "antd/dist/antd.css";
 import Header from "./header";
 import App from "./app";
 
+import { createGlobalStyle } from "styled-components";
+
+const BodyStyle = createGlobalStyle`
+  body {
+    height:0;
+    background-color:transparent;
+    overflow-y:hidden
+  }
+
+  .option-name {
+    font-size: 14px;
+    color: #000000aa;
+    font-weight: 600;
+  }
+`;
+
+
 function Root({ defaultValues }) {
   return (
     <>
       <Header title={defaultValues.title}/>
       <App defaultValues={defaultValues}/>
+      <BodyStyle />
     </>
   )
 }
@@ -63,5 +81,4 @@ const defaultValues = {
 ReactDOM.render(
   <Root defaultValues={defaultValues}/>,
   document.getElementById("root")
-  );
-  
+);

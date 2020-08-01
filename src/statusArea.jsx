@@ -9,7 +9,7 @@ const { TextArea } = Input;
 export default function StatusArea( { text } ) {
   return (
     <TextArea 
-      readonly
+      readOnly
       autoSize={{
         minRows: 10,
         maxRows: 10

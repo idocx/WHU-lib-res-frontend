@@ -1,6 +1,4 @@
-import React, {useReducer} from "react";
-
-import { Space } from 'antd';
+import React from "react";
 
 import "antd/dist/antd.css";
 
@@ -16,11 +14,12 @@ import StatusArea from "./statusArea";
 const AppBody = styled.div`
   display: -webkit-flex; /* Safari */
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 30px 30px 30px;
+  height: 570px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px;
   background-color: #fafafa;
-  border: 2px solid #f0f0f0;
+  border: 3px solid #f0f0f0;
   border-radius: 0 0 4px 4px;
   border-style:none solid solid solid;
   -webkit-touch-callout: none;
@@ -36,18 +35,18 @@ const AppBody = styled.div`
   }
 `;
 
-function handleChange( state, action ) {
-  return {
-    ...state,
-    [action.type]: action.value 
-  }
-}
+// function handleChange( state, action ) {
+//   return {
+//     ...state,
+//     [action.type]: action.value 
+//   }
+// }
 
 export default function App({ defaultValues }) {
-  const [values, setValues] = useReducer(handleChange, defaultValues)
+  var values = { ...defaultValues }
+  // const [values, setValues] = useReducer(handleChange, defaultValues)
   return (
-    <AppBody id="app-body">
-      <Space className="container" direction="vertical" size={30}>
+    <AppBody>
       <UserInfoComponent 
         defaultUsername={values.username}
       />
@@ -67,7 +66,6 @@ export default function App({ defaultValues }) {
       />
       <OperationButtons/>
       <StatusArea text="Hello, world." />
-      </Space>
     </AppBody>
     )
   }

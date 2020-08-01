@@ -22,7 +22,12 @@ const CustomRadio = ({ name, options, defaultValue, handleChange }) => {
         {
           options.map(option => {
             return (
-            <Radio.Button value={option.value}>{option.label}</Radio.Button>
+            <Radio.Button 
+              value={option.value}
+              key={option.value}
+            >
+              {option.label}
+            </Radio.Button>
             )
           })
         }

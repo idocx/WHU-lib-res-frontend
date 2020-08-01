@@ -1,28 +1,45 @@
-import React, {useReducer} from "react";
+import React from "react";
 
-import { Space, Button } from 'antd';
-import { CloseOutlined  } from '@ant-design/icons';
+import { Button } from 'antd';
+import { CloseOutlined, MinusOutlined  } from '@ant-design/icons';
 
 import "antd/dist/antd.css";
 
 import styled from "styled-components";
 
 const AppHeader = styled.div`
-  -webkit-app-region: drag;
   width: 100%;
-  height: 40px;
+  height: 30px;
   background-color: #fafafa;
   border: 3px solid #f0f0f0;
   border-radius: 4px 4px 0 0;
   border-style:solid solid none solid;
   display: flex;
+  display: -webkit-flex; /* Safari */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-app-region: drag;
 
   div.header-content {
-    margin: 1px 5px;
+    margin: 3px 5px;
+    height: 100%;
+  }
+
+  .buttons {
+    
+  }
+
+  div.closeWindow,
+  div.minimizeWindow {
+    -webkit-app-region: no-drag;
+    display: inline;
   }
 
   div.title {
-    margin: auto;
     position: absolute;
     left: 50%;
     transform: translate(-50%,0);
@@ -33,13 +50,37 @@ const AppHeader = styled.div`
 
 export default function Header({ title }) {
   return (
-    <AppHeader>
-      <div className="closeWindow header-content">
-        <CloseOutlined />
-      </div>
-      <div className="title header-content">
-        {title}
-      </div>
-    </AppHeader>
+    <>
+      <AppHeader id="dragable">
+        <div className="buttons header-content">
+          <div className="closeWindow">
+            <Button 
+              type="text"
+              size="small" 
+              style={{ 
+                color: "#FF0000",
+              }}
+              icon={<CloseOutlined />}
+              onClick={ () => { window.ipcRenderer.send("close"); }}
+            />
+          </div>
+          <div className="minimizeWindow">
+            <Button 
+              danger
+              type="text"
+              size="small" 
+              style={{ 
+                color: "#1E9600",
+              }}
+              icon={<MinusOutlined />}
+              onClick={ () => { window.ipcRenderer.send("min"); }}
+            />
+          </div>  
+        </div>
+        <div className="title header-content">
+          {title}
+        </div>
+      </AppHeader>
+    </>
   );
 }

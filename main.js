@@ -1,18 +1,22 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const pkg = require('./package.json') // import package.json
 
 let mainWindow;
 
 function createWindow () {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 646,
+    width: 750,
+    height: 600,
     resizable: false,
     transparent: true,
     hasShadow: false,
     frame: false,
     maximizable: false,
     minimizable: false,
+    webPreferences: {
+      nodeIntegration: true,
+      preload: __dirname + '/preLoad.js'
+    }
   })
   if (pkg.DEV) {
     mainWindow.loadURL("http://localhost:3000/")
@@ -28,6 +32,18 @@ function createWindow () {
     mainWindow = null
   })
 }
+
+ipcMain.on('close', function () {
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
+
+
+ipcMain.on('min', function () {
+  mainWindow.minimize();
+})
+
 
 app.on('ready', createWindow)
 

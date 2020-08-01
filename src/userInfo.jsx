@@ -7,8 +7,9 @@ import styled from "styled-components";
 
 const FormItem = Form.Item;
 
-const FButton = styled(Button)`
+const RButton = styled(Button)`
   float: right;
+  margin: 0 5px;
 `;
 
 const Description = styled.div`
@@ -64,7 +65,6 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, setUserInfo }) {
     closable={false}
     onClose={handleClose}
     visible={visible}
-    getContainer={"#app-body"}
     width={300}
   >
     <Form
@@ -92,7 +92,8 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, setUserInfo }) {
       >
         <Input type="password" placeholder="请输入密码" />
       </FormItem>
-      <FButton type="primary" htmlType="submit" shape={"round"}>确认</FButton>
+      <RButton type="secondary" onClick={handleClose} shape={"round"}>取消</RButton>
+      <RButton type="primary" htmlType="submit" shape={"round"}>确认</RButton>
     </Form>
   </Drawer>
   )

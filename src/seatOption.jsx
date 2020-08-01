@@ -10,14 +10,16 @@ const RadioSpace = styled(Space)`
   align-items: baseline;
 `;
 
-const CustomRadio = ({ name, options, defaultValue, handleChange }) => {
+const CustomRadio = ({ name, options, value, onChange }) => {
   return (
     <RadioSpace size={30}>
       <label className="option-name">{name}</label> 
       <Radio.Group
-        defaultValue={defaultValue}
+        value={value}
         buttonStyle="solid"
-        onChange={handleChange}
+        onChange={(e) => {
+          onChange(e.target.value)
+        }}
       >
         {
           options.map(option => {
@@ -36,23 +38,27 @@ const CustomRadio = ({ name, options, defaultValue, handleChange }) => {
   )
 }
 
-export default function SeatOptionRadios({ defaultWindow, defaultPlugger, windowOptions, pluggerOptions, handleChange }) {
+export default function SeatOptionRadios({ value, id, onChange, windowOptions, pluggerOptions }) {
   return (
-    <Row align="middle">
+    <Row align="middle" id={id}>
       <Col span={12}>
         <CustomRadio
           name="是否靠窗"
-          defaultValue={defaultWindow}
+          value={value.window}
           options={windowOptions}
-          handleChage={handleChange}
+          onChange={(windowValue) => {
+            onChange({...value, window: windowValue})
+          }}
         />
       </Col>
       <Col span={12}>
         <CustomRadio
           name="是否有插座"
-          defaultValue={defaultPlugger}
+          value={value.plugger}
           options={pluggerOptions}
-          handleChage={handleChange}
+          onChange={(pluggerValue) => {
+            onChange({...value, plugger: pluggerValue})
+          }}
         />
       </Col>
     </Row>

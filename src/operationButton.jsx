@@ -1,24 +1,59 @@
 import React from "react";
 
-import { Space, Button } from 'antd';
+import { Button } from 'antd';
 
 import "antd/dist/antd.css";
 
 import styled from "styled-components";
 
-const Buttons = styled(Space)`
+const Buttons = styled.div`
   display: flex;
   display: --webkit-flex;
-  justify-content: center;
-  margin-top: 10px;
+  margin: 20px 20% 0 15%;
+  justify-content: space-between;
 `;
 
-export default function OperationButtons() {
+function OperationButton (props) {
   return (
-    <Buttons size={50}>
-      <Button type="secondary" shape="round">保存信息</Button>
-      <Button type="primary" shape="round">预约座位</Button>
-      <Button type="secondary" shape="round">改签座位</Button>
+    <Button 
+      {...props}
+      onClick={() => props.onChange(props.value)}
+    >
+      {props.label}
+    </Button>
+  )
+}
+
+export default function OperationButtons({ id, onChange }) {
+  const operations = [
+    {
+      htmlType: "submit",
+      type: "secondary", 
+      value: "save",
+    },
+    {
+      htmlType: "submit",
+      type: "primary",
+      value: "reserve",
+    },
+    {
+      htmlType: "submit",
+      type: "secondary",
+      value: "change",
+    }
+  ]
+  return (
+    <Buttons size={50} id={id}>
+      {
+        operations.map(operation => (
+          <OperationButton
+            {...operation} 
+            shape="round" 
+            onChange={onChange} 
+            key={operation.value}
+          />
+        ))
+      }
     </Buttons>
   )
 }

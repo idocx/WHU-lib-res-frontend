@@ -6,15 +6,17 @@ import "antd/dist/antd.css";
 
 const { TextArea } = Input;
 
-export default function StatusArea( { text } ) {
+export default function NoticeArea( { text, id } ) {
   return (
-    <TextArea 
+    <TextArea
       readOnly
-      autoSize={{
-        minRows: 10,
-        maxRows: 10
-      }}
+      id={id}
       value={text}
+      rows={8}
+      autoSize={{
+        minRows: 8,
+        maxRows: 8
+      }}
     />
   )
 }

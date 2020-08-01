@@ -2,7 +2,7 @@
   "name": "whu-lib-res",
   "version": "0.0.1",
   "private": true,
-  "main": "public/main.js",
+  "main": "public/electron.js",
   "homepage": ".",
   "author": "idocx",
   "description": "electron-app",
@@ -32,6 +32,7 @@
     },
     "win": {
       "target": [
+      	"portable",
         "zip"
       ],
       "icon": "build/icon.png"

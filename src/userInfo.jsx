@@ -7,9 +7,8 @@ import styled from "styled-components";
 
 const FormItem = Form.Item;
 
-const RButton = styled(Button)`
+const RightSide = styled.div`
   float: right;
-  margin: 0 5px;
 `;
 
 const Description = styled.div`
@@ -27,9 +26,7 @@ function UserInfoDescription({ username, openEditDrawer }) {
           </span>
         </Col>
         <Col span={3}>
-          <span>
-            {username}
-          </span>
+          {username}
         </Col>
         <Col xs={2} offset={2}>
           <Button 
@@ -45,16 +42,31 @@ function UserInfoDescription({ username, openEditDrawer }) {
   )
 }
 
-function EditUserInfoDrawer({ visible, closeEditDrawer, setUserInfo }) {
+function EditUserInfoDrawer({ visible, closeEditDrawer, onChange }) {
+  var usernameInputRef = null,
+      confirmButtonRef = null;
+
   const handleClose = () => {
     closeEditDrawer();
   }
 
   const handleFinish = values => {
-    setUserInfo(values);
+    onChange(values);
     form.resetFields();
     handleClose();
   };
+
+  const handleVisibleChange = (visible) => {
+    if (visible && usernameInputRef) {
+      usernameInputRef.focus();
+    }
+  }
+
+  const handleKeyUp = (e) => {
+    if (e.keyCode === 13 && confirmButtonRef) {
+      confirmButtonRef.click();
+    }
+  }
 
   const [form] = Form.useForm();
 
@@ -65,6 +77,7 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, setUserInfo }) {
     closable={false}
     onClose={handleClose}
     visible={visible}
+    afterVisibleChange={handleVisibleChange}
     getContainer={document.getElementById("root")}
     width={300}
   >
@@ -72,6 +85,7 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, setUserInfo }) {
       hideRequiredMark
       onFinish={handleFinish}
       form={form}
+      onKeyUp={handleKeyUp}
     > 
       <FormItem 
         name="username" 
@@ -81,7 +95,10 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, setUserInfo }) {
           message: "学号不能为空"
         }]}
       >
-        <Input placeholder="请输入学号" />
+        <Input 
+          ref={(input) => usernameInputRef = input} 
+          placeholder="请输入学号" 
+        />
       </FormItem>
       <FormItem 
         name="password" 
@@ -93,16 +110,33 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, setUserInfo }) {
       >
         <Input type="password" placeholder="请输入密码" />
       </FormItem>
-      <RButton type="secondary" onClick={handleClose} shape={"round"}>取消</RButton>
-      <RButton type="primary" htmlType="submit" shape={"round"}>确认</RButton>
-    </Form>
+      <RightSide>
+        <Button 
+          type="primary" 
+          htmlType="submit" 
+          shape={"round"}
+          ref={(confirm) => confirmButtonRef = confirm}
+        >
+          确认
+        </Button>
+        <Button 
+          type="secondary" 
+          onClick={handleClose} 
+          shape={"round"}
+          style={{ 
+            margin: "0 5px 0 15px"
+          }}
+        >
+          取消
+        </Button>
+      </RightSide>
+      </Form>
   </Drawer>
   )
 }
 
-export default function UserInfoComponent({ defaultUsername, handleChange }) {
-  const [editModeVisible, setEditModeVisible] = useState(false),
-        [username, setUsername] = useState(defaultUsername);
+export default function UserInfoComponent( { value, id, onChange} ) {
+  const [editModeVisible, setEditModeVisible] = useState(false);
 
   const openEditDrawer = () => {
     setEditModeVisible(true);
@@ -110,19 +144,17 @@ export default function UserInfoComponent({ defaultUsername, handleChange }) {
   const closeEditDrawer = () => {
     setEditModeVisible(false);
   }
-  const setUserInfo = ({ username, password }) => {
-    setUsername(username);
-  }
+
   return (
     <>
-      <UserInfoDescription
-        username={username}
+      <UserInfoDescription id={id}
+        username={value.username}
         openEditDrawer={openEditDrawer}
       />
       <EditUserInfoDrawer
         visible={editModeVisible} 
         closeEditDrawer={closeEditDrawer}
-        setUserInfo={setUserInfo}
+        onChange={onChange}
       />
     </>
   )

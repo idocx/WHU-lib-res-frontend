@@ -52,7 +52,6 @@ export default function Header({ title }) {
           <div className="closeWindow">
             <Button 
               type="text"
-              shape="circle"
               size="small" 
               style={{ 
                 color: "#FF0000",
@@ -60,12 +59,11 @@ export default function Header({ title }) {
               icon={<CloseOutlined />}
               onClick={ () => { window.ipcRenderer.send("close"); }}
             />
-          </div>
+          </div>  
           <div className="minimizeWindow">
             <Button 
               danger
               type="text"
-              shape="circle"
               size="small" 
               style={{ 
                 color: "#1E9600",
@@ -73,7 +71,7 @@ export default function Header({ title }) {
               icon={<MinusOutlined />}
               onClick={ () => { window.ipcRenderer.send("min"); }}
             />
-          </div>  
+          </div>
         </div>
         <div className="title header-content">
           {title}

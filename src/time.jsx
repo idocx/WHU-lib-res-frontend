@@ -15,23 +15,38 @@ function formatTime(value) {
   return `${hour}:${minute}`
 }
 
-export default function ResTimeSlider({ defaultValue }) {
-  const name = "time-slider",
-        minTime = 480,
+export default function ResTimeSlider({ value, id, onChange }) {
+  const minTime = 480,
         maxTime = 1350,
-        timeInterval = 30,
-        [value, setValue] = useState(defaultValue);
+        timeInterval = 30;
+
+  // check in advance
+  if (value.startTime >= value.endTime) {
+    value = {
+      ...value,
+      startTime: value.endTime,
+      endTime: value.startTime
+    }
+  }
+  value = {
+    ...value,
+    startTime: minTime < value.startTime ? value.startTime : minTime,
+    endTime: maxTime > value.endTime ? value.endTime : maxTime
+  }
+
+  const [ value_, updateValue ] = useState([ value.startTime, value.endTime ])
 
   const handleChange = values => {
-    setValue(values);
+    updateValue(values)
+    onChange({ startTime: values[0], endTime: values[1] });
   }  
 
-  const handleAfterChange = (values) => {
-    if (values[0] === values[1] || values[0] < minTime || values[1] > maxTime) {
+  const handleAfterChange = values => {
+    if (values[0] === values[1]) {
       if (values[1] <= maxTime - 30) {
-        setValue([value[0], value[1]+30]);
+        updateValue( [values[0], values[1] + 30]);
       } else if (values[0] >= minTime + 30) {
-        setValue([value[0]-30, value[1]]);
+        updateValue( [values[0] - 30, values[1]]);
       }
     };
   }
@@ -45,7 +60,7 @@ export default function ResTimeSlider({ defaultValue }) {
         </Col>
         <Col span={15}>
           <Slider
-            id={name} 
+            id={id} 
             range
             min={minTime}
             max={maxTime}
@@ -53,14 +68,14 @@ export default function ResTimeSlider({ defaultValue }) {
             onChange={handleChange}
             onAfterChange={handleAfterChange}
             tooltipPlacement="bottom"
-            value={value}
+            value={value_}
             tipFormatter={formatTime}
           />
         </Col>
         <Col span={5} offset={1}>
-          <Tag color="red">{formatTime(value[0])}</Tag>
+          <Tag color="red">{formatTime(value_[0])}</Tag>
           <span style={{ margin: "0 8px 0 0"}}>~</span>
-          <Tag color="geekblue">{formatTime(value[1])}</Tag>
+          <Tag color="geekblue">{formatTime(value_[1])}</Tag>
         </Col>
       </Row>
     </TimeSlider>

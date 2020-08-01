@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Slider, Tag, Row, Col, message } from "antd";
+import { Slider, Tag, Row, Col } from "antd";
 import "antd/dist/antd.css";
 
 import styled from "styled-components";
@@ -28,7 +28,6 @@ export default function ResTimeSlider({ defaultValue }) {
 
   const handleAfterChange = (values) => {
     if (values[0] === values[1] || values[0] < minTime || values[1] > maxTime) {
-      message.error("无效的时间！");
       if (values[1] <= maxTime - 30) {
         setValue([value[0], value[1]+30]);
       } else if (values[0] >= minTime + 30) {

@@ -1,5 +1,4 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
-const pkg = require('./package.json') // import package.json
 
 let mainWindow;
 
@@ -18,11 +17,8 @@ function createWindow () {
       preload: __dirname + '/preLoad.js'
     }
   })
-  if (pkg.DEV) {
-    mainWindow.loadURL("http://localhost:3000/")
-  } else {
-    mainWindow.loadFile('./build/index.html')
-  }
+  // mainWindow.loadURL("http://localhost:3000/")
+  mainWindow.loadFile('./build/index.html')
 
   Menu.setApplicationMenu(null)
 

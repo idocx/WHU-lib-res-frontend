@@ -52,6 +52,7 @@ export default function Header({ title }) {
           <div className="closeWindow">
             <Button 
               type="text"
+              shape="circle"
               size="small" 
               style={{ 
                 color: "#FF0000",
@@ -64,6 +65,7 @@ export default function Header({ title }) {
             <Button 
               danger
               type="text"
+              shape="circle"
               size="small" 
               style={{ 
                 color: "#1E9600",

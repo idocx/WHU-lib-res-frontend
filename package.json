@@ -1,21 +1,41 @@
 {
-  "name": "lib-res-frontend",
-  "version": "0.1.0",
+  "name": "whu-lib-res",
+  "version": "0.0.1",
   "private": true,
-  "main": "main.js",
+  "main": "public/main.js",
   "homepage": ".",
-  "DEV": true,
+  "author": "idocx",
+  "description": "electron-app",
+  "DEV": false,
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
+    "antd": "^4.5.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "styled-components": "^5.1.1"
+  },
+  "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "antd": "^4.5.1",
     "electron": "^9.1.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
-    "styled-components": "^5.1.1"
+    "electron-builder": "^22.8.0",
+    "react-scripts": "3.4.1"
+  },
+  "build": {
+    "appId": "com.yuxingfei.app",
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "win": {
+      "target": [
+        "zip"
+      ],
+      "icon": "build/icon.png"
+    }
   },
   "scripts": {
     "start": "react-scripts start",
@@ -23,7 +43,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron-start": "electron .",
-    "package": "electron-packager ."
+    "electron-pack": "electron-builder --dir",
+    "electron-dist": "electron-builder"
   },
   "eslintConfig": {
     "extends": "react-app"

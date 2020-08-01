@@ -12,7 +12,7 @@ const RadioSpace = styled(Space)`
 
 const CustomRadio = ({ name, options, defaultValue, handleChange }) => {
   return (
-    <RadioSpace size={40}>
+    <RadioSpace size={30}>
       <label className={"option-name"}>{name}</label> 
       <Radio.Group
         defaultValue={defaultValue}

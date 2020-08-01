@@ -5,9 +5,14 @@ let mainWindow;
 
 function createWindow () {
   mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 600,
-    resizable: false
+    width: 800,
+    height: 646,
+    resizable: false,
+    transparent: true,
+    hasShadow: false,
+    frame: false,
+    maximizable: false,
+    minimizable: false,
   })
   if (pkg.DEV) {
     mainWindow.loadURL("http://localhost:3000/")

@@ -1,69 +1,22 @@
-import React, {useReducer} from "react";
+import React from "react";
 import ReactDOM from "react-dom";
-
-import { Space, Button, Form } from 'antd';
 
 import "antd/dist/antd.css";
 
-import styled from "styled-components";
+import Header from "./header";
+import App from "./app";
 
-import UserInfoComponent from "./userInfo";
-import ResTimeSlider from "./time";
-import LibRoomCascader from "./libRoom";
-import SeatOptionRadios from "./seatOption"
-import OperationButtons from "./operationButton"
-
-const AppDiv = styled(Space)`
-  width: 100%;
-`;
-
-function handleChange( state, action ) {
-  return {
-    ...state,
-    [action.type]: action.value 
-  }
-}
-
-function App({ defaultValues }) {
-  const [values, setValues] = useReducer(handleChange, defaultValues)
-  const [form] = Form.useForm();
-  const handleFinsh = values => {
-    console.log(values);
-  }
+function Root({ defaultValues }) {
   return (
-    <AppDiv direction={"vertical"} size={40}>
-      <UserInfoComponent 
-        defaultUsername={values.username}
-      />
-      <Form
-        form={form}
-        onFinish={handleFinsh}
-      >
-        <Form.Item>
-          <ResTimeSlider 
-            defaultValue={values.startEndTime}
-          />
-          <Button type="primary" htmlType="submit">确认</Button>
-        </Form.Item>
-      </Form>
-
-      <LibRoomCascader 
-        defaultLibRoom={values.room} 
-        options={values.options}
-      />
-      <SeatOptionRadios 
-        handleChange={()=>{}} 
-        defaultWindow={values.window}
-        defaultPlugger={values.plugger}
-        windowOptions={values.windowOptions}
-        pluggerOptions={values.pluggerOptions}
-      />
-      <OperationButtons />
-    </AppDiv>
+    <>
+      <Header title={defaultValues.title}/>
+      <App defaultValues={defaultValues}/>
+    </>
   )
 }
 
 const defaultValues = {
+  title: "武汉大学图书馆座位预约助手",
   username: "201xxxxxxxx",
   startEndTime: [600, 720],
   room: [0, 12],
@@ -108,7 +61,7 @@ const defaultValues = {
 }
 
 ReactDOM.render(
-  <App defaultValues={defaultValues}/>,
+  <Root defaultValues={defaultValues}/>,
   document.getElementById("root")
   );
   

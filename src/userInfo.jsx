@@ -19,14 +19,25 @@ const Description = styled.div`
 function UserInfoDescription({ username, openEditDrawer }) {
   return (
     <Description size={75}>
-      <Row>
-        <Col span={7}>
-          <span>
-            <strong>学号：</strong>{username}
+      <Row align={"middle"}>
+        <Col span={3}>
+          <span className={"option-name"}>
+            学号
           </span>
         </Col>
-        <Col xs={3} offset={6}>
-          <Button type="primary" onClick={openEditDrawer}>修改信息</Button>
+        <Col span={3}>
+          <span>
+            {username}
+          </span>
+        </Col>
+        <Col xs={2} offset={2}>
+          <Button 
+            type="secondary"
+            onClick={openEditDrawer} 
+            shape={"round"}
+          >
+            修改个人信息
+          </Button>
         </Col>
       </Row>
     </Description>
@@ -50,9 +61,11 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, setUserInfo }) {
     <Drawer
     title="修改个人信息"
     placement="right"
+    closable={false}
     onClose={handleClose}
     visible={visible}
-    width={320}
+    getContainer={"#app-body"}
+    width={300}
   >
     <Form
       hideRequiredMark
@@ -79,7 +92,7 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, setUserInfo }) {
       >
         <Input type="password" placeholder="请输入密码" />
       </FormItem>
-      <FButton type="primary" htmlType="submit">确认</FButton>
+      <FButton type="primary" htmlType="submit" shape={"round"}>确认</FButton>
     </Form>
   </Drawer>
   )

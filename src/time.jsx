@@ -34,14 +34,12 @@ export default function ResTimeSlider({ defaultValue }) {
   return (
     <TimeSlider>
       <Row align="middle">
-        <Col span={7}>
-          <label className={"option-name"}>起止时间：
-            <Tag color="red">{formatTime(value[0])}</Tag>
-            ~&nbsp;&nbsp;
-            <Tag color="geekblue">{formatTime(value[1])}</Tag>
-          </label>
+        <Col span={3}>
+          <span className={"option-name"}>
+            起止时间
+          </span>
         </Col>
-        <Col span={17}>
+        <Col span={15}>
           <Slider
             id={name} 
             range
@@ -54,6 +52,11 @@ export default function ResTimeSlider({ defaultValue }) {
             defaultValue={defaultValue}
             tipFormatter={formatTime}
           />
+        </Col>
+        <Col span={5} offset={1}>
+          <Tag color="red">{formatTime(value[0])}</Tag>
+          <span style={{ margin: "0 8px 0 0"}}>~</span>
+          <Tag color="geekblue">{formatTime(value[1])}</Tag>
         </Col>
       </Row>
     </TimeSlider>

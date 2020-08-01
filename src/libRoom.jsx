@@ -7,12 +7,12 @@ import "antd/dist/antd.css";
 export default function LibRoomCascader({ defaultLibRoom, options, handleChange }) {
   return (
     <Row align={"middle"}>
-      <Col span={7}>
+      <Col span={3}>
         <label className={"option-name"}>
           场馆选择
         </label>
       </Col>
-      <Col span={17}>
+      <Col span={15}>
         <Cascader 
         expandTrigger={"hover"}
         placeholder={"请选择"} 

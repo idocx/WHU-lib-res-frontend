@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import "antd/dist/antd.css";
 
@@ -15,32 +15,15 @@ const NoticeArea = styled.div`
   user-select: text;
   padding: 2px 6px;
   white-space: pre-wrap;
-
-  ::-webkit-scrollbar-thumb {
-    background-color: ${props => props.isActive ? "#e5e5e5" : "none"};
-  }
 `;
 
 export default function Notice({ text, id }) {
   const maxCharNumber = 10000;
-  var noticeRef = useRef(null),
-      timeOutRef = useRef(null);
-  const [ isActive, setActive ] = useState(true);
+  var noticeRef = useRef(null);
 
   // limit text length
   const processText = (text) => {
     return text.slice(-maxCharNumber);
-  }
-
-  const handleScroll = () => {
-    if (timeOutRef !== null) {
-      clearTimeout(timeOutRef);
-    }
-    setActive(true);
-    timeOutRef = setTimeout(() => {
-      setActive(false);
-      timeOutRef = null;
-    }, 3000);
   }
 
   // scroll the area to the correct place
@@ -54,8 +37,6 @@ export default function Notice({ text, id }) {
     <NoticeArea
       id={id}
       ref={(area) => noticeRef = area}
-      isActive={isActive}
-      onScroll={handleScroll}
       dangerouslySetInnerHTML={{ __html: processText(text) }}
     />
   )

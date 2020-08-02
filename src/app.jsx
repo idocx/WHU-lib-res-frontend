@@ -37,7 +37,7 @@ const AppBody = styled.div`
 
 const defaultValues = {
   userInfo: {
-    username: "2017301040040"
+    username: "201543321543"
   },
   startEndTime: {
     startTime: 600,

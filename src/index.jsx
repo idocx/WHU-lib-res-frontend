@@ -25,6 +25,21 @@ const Style = createGlobalStyle`
     width: 750px;
     margin: auto;
   }
+  
+  // style of scroll bar
+  ::-webkit-scrollbar-track {
+    background-color: none;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #e5e5e5;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #46a6ff;
+  }
+  ::-webkit-scrollbar {
+    width: 7px;
+  }
 `;
 
 const title = "武汉大学图书馆座位预约助手";

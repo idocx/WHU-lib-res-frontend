@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import "antd/dist/antd.css";
 
@@ -10,34 +10,37 @@ const NoticeArea = styled.div`
   min-height: 200px;
   background-color: #ffffff;
   border: 1px solid #d9d9d9;
+  border-radius: 3px;
   overflow-y: scroll;
   user-select: text;
-  padding: 5px;
+  padding: 2px 6px;
   white-space: pre-wrap;
 
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.1);
-    border-radius: 3px;
-    background-color: #fefefe;
-  }
   ::-webkit-scrollbar-thumb {
-    background-color: #0ae;
-    border-radius: 4px;
-    background-color: #1890ff;
-  }
-  ::-webkit-scrollbar {
-    width: 4px;
-    background-color: #F5F5F5;
+    background-color: ${props => props.isActive ? "#e5e5e5" : "none"};
   }
 `;
 
 export default function Notice({ text, id }) {
   const maxCharNumber = 10000;
-  var noticeRef = useRef(null);
+  var noticeRef = useRef(null),
+      timeOutRef = useRef(null);
+  const [ isActive, setActive ] = useState(true);
 
   // limit text length
   const processText = (text) => {
     return text.slice(-maxCharNumber);
+  }
+
+  const handleScroll = () => {
+    if (timeOutRef !== null) {
+      clearTimeout(timeOutRef);
+    }
+    setActive(true);
+    timeOutRef = setTimeout(() => {
+      setActive(false);
+      timeOutRef = null;
+    }, 3000);
   }
 
   // scroll the area to the correct place
@@ -51,6 +54,8 @@ export default function Notice({ text, id }) {
     <NoticeArea
       id={id}
       ref={(area) => noticeRef = area}
+      isActive={isActive}
+      onScroll={handleScroll}
       dangerouslySetInnerHTML={{ __html: processText(text) }}
     />
   )

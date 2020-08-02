@@ -10,8 +10,8 @@ import UserInfoComponent from "./userInfo";
 import ResTimeSlider from "./time";
 import LibRoomCascader from "./libRoom";
 import SeatOptionRadios from "./seatOption";
-import OperationButtons from "./operationButton";
-import NoticeArea from "./noticeArea";
+import OperationButtons from "./operation";
+import NoticeArea from "./notice";
 
 const FormItem = Form.Item;
 
@@ -67,6 +67,26 @@ const options = {
         {
           value: 12,
           label: "A2"
+        },
+        {
+          value: 13,
+          label: "A3"
+        },
+        {
+          value: 14,
+          label: "A4"
+        },
+        {
+          value: 15,
+          label: "A5"
+        },
+        {
+          value: 16,
+          label: "E1"
+        },
+        {
+          value: 17,
+          label: "E2"
         }
       ]
     },
@@ -79,6 +99,10 @@ const options = {
           label: "不知道"
         }
       ]
+    },
+    {
+      value: 2,
+      label: "不限场馆"
     }
   ],
   windowOptions: [
@@ -93,6 +117,7 @@ const options = {
   ]
 }
 
+// TODO: Backend
 function getDefaultValue() {
   return defaultValues;
 }
@@ -103,24 +128,24 @@ export default function App() {
 
   const writeMessage = (message) => {
     setText(
-      text + (text.trim() ? "\n" : "") + message
+      text + (text ? "\n" : "") + message
     );
   }
 
+  // TODO: Backend
   const handleFinish = (values) => {
-    console.log(values);
     writeMessage(JSON.stringify(values));
   }
 
   const [ form ] = Form.useForm();
-  
+
   return (
       <Form
         form={form}
         initialValues={defaultValues}
         onFinish={handleFinish}
       >
-        <AppBody>
+        <AppBody id="app">
           <FormItem
             name="userInfo"
           >
@@ -147,7 +172,7 @@ export default function App() {
             />
           </FormItem>
           <FormItem
-            name="buttons"  
+            name="operation"  
           >
             <OperationButtons />
           </FormItem>

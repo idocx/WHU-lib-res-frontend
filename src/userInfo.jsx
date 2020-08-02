@@ -84,7 +84,7 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, onChange }) {
     visible={visible}
     afterVisibleChange={handleVisibleChange}
     getContainer={document.getElementById("root")}
-    width={300}
+    width={270}
   >
     <Form
       hideRequiredMark

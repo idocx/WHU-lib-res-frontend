@@ -28,11 +28,11 @@ function UserInfoDescription({ username, openEditDrawer }) {
         <Col span={3}>
           {username}
         </Col>
-        <Col xs={2} offset={2}>
+        <Col xs={2} offset={3}>
           <Button 
             type="secondary"
+            shape="round"
             onClick={openEditDrawer} 
-            shape={"round"}
           >
             修改个人信息
           </Button>

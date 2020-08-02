@@ -9,51 +9,48 @@ import styled from "styled-components";
 const Buttons = styled.div`
   display: flex;
   display: --webkit-flex;
-  margin: 20px 20% 0 15%;
+  margin: 10px 20% 0 15%;
   justify-content: space-between;
 `;
 
-function OperationButton (props) {
-  return (
-    <Button 
-      {...props}
-      onClick={() => props.onChange(props.value)}
-    >
-      {props.label}
-    </Button>
-  )
-}
-
 export default function OperationButtons({ id, onChange }) {
-  const operations = [
-    {
-      htmlType: "submit",
-      type: "secondary", 
-      value: "save",
-    },
-    {
-      htmlType: "submit",
-      type: "primary",
-      value: "reserve",
-    },
-    {
-      htmlType: "submit",
-      type: "secondary",
-      value: "change",
-    }
-  ]
   return (
     <Buttons size={50} id={id}>
-      {
-        operations.map(operation => (
-          <OperationButton
-            {...operation} 
-            shape="round" 
-            onChange={onChange} 
-            key={operation.value}
-          />
-        ))
-      }
+      <Button 
+        type="secondary" 
+        htmlType="submit" 
+        shape="round"
+        value="save"
+        onClick={() => {
+          onChange("save")
+        }}
+      >
+        保存信息
+      </Button>
+
+      <Button 
+        type="primary" 
+        htmlType="submit" 
+        shape="round"
+        value="reserve"
+        onClick={() => {
+          onChange("reserve")
+        }}
+      >
+        预约座位
+      </Button>
+
+      <Button 
+        type="secondary" 
+        htmlType="submit" 
+        shape="round"
+        value="change"
+        onClick={() => {
+          onChange("change")
+        }}
+      >
+        改签座位
+      </Button>
     </Buttons>
   )
 }

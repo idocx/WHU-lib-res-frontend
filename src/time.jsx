@@ -34,20 +34,24 @@ export default function ResTimeSlider({ value, id, onChange }) {
     endTime: maxTime > value.endTime ? value.endTime : maxTime
   }
 
-  const [ value_, updateValue ] = useState([ value.startTime, value.endTime ])
+  const [ value_, setValue ] = useState([ value.startTime, value.endTime ])
 
   const handleChange = values => {
-    updateValue(values)
+    setValue(values)
     onChange({ startTime: values[0], endTime: values[1] });
   }  
 
   const handleAfterChange = values => {
+    // when startTime === endTime
     if (values[0] === values[1]) {
+
       if (values[1] <= maxTime - 30) {
-        updateValue( [values[0], values[1] + 30]);
-      } else if (values[0] >= minTime + 30) {
-        updateValue( [values[0] - 30, values[1]]);
+        values[1] += 30;
+      } 
+      else if (values[0] >= minTime + 30) {
+        values[0] -= 30;
       }
+      handleChange(values);
     };
   }
   return (

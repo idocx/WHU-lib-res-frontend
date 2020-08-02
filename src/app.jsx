@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Form } from "antd";
 
@@ -11,7 +11,7 @@ import ResTimeSlider from "./time";
 import LibRoomCascader from "./libRoom";
 import SeatOptionRadios from "./seatOption";
 import OperationButtons from "./operationButton";
-import NoticeArea from "./noticeArea";
+import NoticeArea, { limitLength } from "./noticeArea";
 
 const FormItem = Form.Item;
 
@@ -21,7 +21,7 @@ const AppBody = styled.div`
   height: 570px;
   flex-direction: column;
   justify-content: space-between;
-  padding: 30px;
+  padding: 30px 30px 10px 30px;
   background-color: #fafafa;
   border: 3px solid #f0f0f0;
   border-radius: 0 0 4px 4px;
@@ -37,8 +37,8 @@ const AppBody = styled.div`
 
 const defaultValues = {
   userInfo: {
-    username: "203213243",
-    password: ""
+    username: "2017301040040",
+    password: null
   },
   startEndTime: {
     startTime: 600,
@@ -99,12 +99,21 @@ function getDefaultValue() {
 
 export default function App() {
   const defaultValues = getDefaultValue();
+  const [ text, setText ] = useState("");
+
+  const writeMessage = (message) => {
+    setText(text + (text.trim() ? "\n" : "") + message);
+  }
+
   const handleFinish = (values) => {
     console.log(values);
+    writeMessage(JSON.stringify(values));
   }
-  var text = "测试中\naaa\nfdsf\nge\nff\ngfre\nfs\ngrdfg\ngfdg\ngd"
+
+  const [ form ] = Form.useForm();
   return (
       <Form
+        form={form}
         initialValues={defaultValues}
         onFinish={handleFinish}
       >

@@ -8,7 +8,7 @@ import App from "./app";
 
 import { createGlobalStyle } from "styled-components";
 
-const BodyStyle = createGlobalStyle`
+const Style = createGlobalStyle`
   body {
     height:0;
     background-color:transparent;
@@ -32,9 +32,9 @@ const title = "武汉大学图书馆座位预约助手";
 function Root() {
   return (
     <>
+      <Style />
       <Header title={title}/>
       <App/>
-      <BodyStyle />
     </>
   )
 }

@@ -11,7 +11,7 @@ import ResTimeSlider from "./time";
 import LibRoomCascader from "./libRoom";
 import SeatOptionRadios from "./seatOption";
 import OperationButtons from "./operationButton";
-import NoticeArea, { limitLength } from "./noticeArea";
+import NoticeArea from "./noticeArea";
 
 const FormItem = Form.Item;
 
@@ -102,7 +102,9 @@ export default function App() {
   const [ text, setText ] = useState("");
 
   const writeMessage = (message) => {
-    setText(text + (text.trim() ? "\n" : "") + message);
+    setText(
+      text + (text.trim() ? "\n" : "") + message
+    );
   }
 
   const handleFinish = (values) => {
@@ -111,6 +113,7 @@ export default function App() {
   }
 
   const [ form ] = Form.useForm();
+  
   return (
       <Form
         form={form}

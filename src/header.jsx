@@ -46,37 +46,35 @@ const AppHeader = styled.div`
 
 export default function Header({ title }) {
   return (
-    <>
-      <AppHeader id="dragable">
-        <div className="buttons header-content">
-          <div className="closeWindow">
-            <Button 
-              type="text"
-              size="small" 
-              style={{ 
-                color: "#FF0000",
-              }}
-              icon={<CloseOutlined />}
-              onClick={ () => { window.ipcRenderer.send("close"); }}
-            />
-          </div>  
-          <div className="minimizeWindow">
-            <Button 
-              danger
-              type="text"
-              size="small" 
-              style={{ 
-                color: "#1E9600",
-              }}
-              icon={<MinusOutlined />}
-              onClick={ () => { window.ipcRenderer.send("min"); }}
-            />
-          </div>
+    <AppHeader id="dragable">
+      <div className="buttons header-content">
+        <div className="closeWindow">
+          <Button 
+            type="text"
+            size="small" 
+            style={{ 
+              color: "#FF0000",
+            }}
+            icon={<CloseOutlined />}
+            onClick={ () => { window.ipcRenderer.send("close"); }}
+          />
+        </div>  
+        <div className="minimizeWindow">
+          <Button 
+            danger
+            type="text"
+            size="small" 
+            style={{ 
+              color: "#1E9600",
+            }}
+            icon={<MinusOutlined />}
+            onClick={ () => { window.ipcRenderer.send("min"); }}
+          />
         </div>
-        <div className="title header-content">
-          {title}
-        </div>
-      </AppHeader>
-    </>
+      </div>
+      <div className="title header-content">
+        {title}
+      </div>
+    </AppHeader>
   );
 }

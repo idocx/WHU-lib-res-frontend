@@ -1,30 +1,57 @@
-import React from "react";
-
-import { Input } from "antd";
+import React, { useEffect, useRef } from "react";
 
 import "antd/dist/antd.css";
 
-const { TextArea } = Input;
+import styled from "styled-components";
 
-const maxLineNumber = 10,
-      maxCharNumber = 1,
-      lineLimit = new RegExp("([^\\n]*\\n){0," + maxLineNumber + "}\\n?$", "mgs"),
-      charLimit = new RegExp(".{0," + maxCharNumber + "}$", "mgs");
+const NoticeArea = styled.div`
+  width: 100%;
+  height: 200px;
+  min-height: 200px;
+  background-color: #ffffff;
+  border: 1px solid #d9d9d9;
+  overflow-y: scroll;
+  user-select: text;
+  padding: 5px;
+  white-space: pre-wrap;
 
-export function limitLength(text) {
-  return text.match(lineLimit)[0].match(charLimit)[0];
-}
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.1);
+    border-radius: 3px;
+    background-color: #fefefe;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #0ae;
+    border-radius: 4px;
+    background-color: #1890ff;
+  }
+  ::-webkit-scrollbar {
+    width: 4px;
+    background-color: #F5F5F5;
+  }
+`;
 
-export default function NoticeArea({ text, id }) {
+export default function Notice({ text, id }) {
+  const maxCharNumber = 10000;
+  var noticeRef = useRef(null);
+
+  // limit text length
+  const processText = (text) => {
+    return text.slice(-maxCharNumber);
+  }
+
+  // scroll the area to the correct place
+  useEffect(() => { 
+    if (noticeRef) {
+      noticeRef.scrollTop = noticeRef.scrollHeight;
+    }
+  }, [text]);
+
   return (
-    <TextArea
-      readOnly
+    <NoticeArea
       id={id}
-      value={text}
-      autoSize={{
-        minRows: 8,
-        maxRows: 8
-      }}
+      ref={(area) => noticeRef = area}
+      dangerouslySetInnerHTML={{ __html: processText(text) }}
     />
   )
 }

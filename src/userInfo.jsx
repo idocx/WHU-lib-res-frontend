@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import { Button, Input, Form, Drawer, Col, Row } from 'antd';
 import "antd/dist/antd.css";
@@ -43,8 +43,8 @@ function UserInfoDescription({ username, openEditDrawer }) {
 }
 
 function EditUserInfoDrawer({ visible, closeEditDrawer, onChange }) {
-  var usernameInputRef = null,
-      confirmButtonRef = null;
+  var usernameInputRef = useRef(null),
+      confirmButtonRef = useRef(null);
 
   const handleClose = () => {
     closeEditDrawer();
@@ -55,6 +55,11 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, onChange }) {
     form.resetFields();
     handleClose();
   };
+
+  const handleCancel = () => {
+    form.resetFields();
+    handleClose();
+  }
 
   const handleVisibleChange = (visible) => {
     if (visible && usernameInputRef) {
@@ -121,7 +126,7 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, onChange }) {
         </Button>
         <Button 
           type="secondary" 
-          onClick={handleClose} 
+          onClick={handleCancel} 
           shape={"round"}
           style={{ 
             margin: "0 5px 0 15px"

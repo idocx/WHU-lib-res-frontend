@@ -15,17 +15,17 @@ const Style = createGlobalStyle`
     overflow-y: hidden;
   }
 
+  #root {
+    width: 750px;
+    margin: auto;
+  }
+  
   .option-name {
     font-size: 14px;
     color: #000000aa;
     font-weight: 600;
   }
 
-  #root {
-    width: 750px;
-    margin: auto;
-  }
-  
   // style of scroll bar
   ::-webkit-scrollbar-track {
     background-color: none;

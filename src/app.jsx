@@ -6,12 +6,12 @@ import "antd/dist/antd.css";
 
 import styled from "styled-components";
 
-import UserInfoComponent from "./userInfo";
-import ResTimeSlider from "./time";
-import LibRoomCascader from "./libRoom";
-import SeatOptionRadios from "./seatOption";
-import OperationButtons from "./operation";
-import NoticeArea from "./notice";
+import UserInfoComponent from "./components/userInfo";
+import ResTimeSlider from "./components/time";
+import LibRoomCascader from "./components/libRoom";
+import SeatOptionRadios from "./components/seatOption";
+import OperationButtons from "./components/operation";
+import NoticeArea from "./components/notice";
 
 const FormItem = Form.Item;
 
@@ -37,8 +37,7 @@ const AppBody = styled.div`
 
 const defaultValues = {
   userInfo: {
-    username: "2017301040040",
-    password: null
+    username: "2017301040040"
   },
   startEndTime: {
     startTime: 600,

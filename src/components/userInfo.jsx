@@ -127,7 +127,7 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, onChange }) {
         <Button 
           type="secondary" 
           onClick={handleCancel} 
-          shape={"round"}
+          shape="round"
           style={{ 
             margin: "0 5px 0 15px"
           }}

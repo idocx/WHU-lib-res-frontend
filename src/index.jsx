@@ -17,7 +17,7 @@ const Style = createGlobalStyle`
 
   #root {
     max-width: 750px;
-    margin: 0 auto;
+    margin: ${(props) => props.type === "web" ? "5%" : "0"} auto;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -50,16 +50,13 @@ const Style = createGlobalStyle`
 `;
 
 const title = "武汉大学图书馆座位预约助手";
-<<<<<<< Updated upstream
-=======
-const type = "desktop";
->>>>>>> Stashed changes
+const type = "web";
 
 function Root() {
   return (
     <>
-      <Style />
-      <Header title={title}/>
+      <Style type={type}/>
+      <Header title={title} type={type}/>
       <App/>
     </>
   )

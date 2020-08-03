@@ -127,7 +127,7 @@ function getOptions() {
 }
 
 function calculateWaitingTime(values) {
-  return 1;
+  return 3;
 }
 
 function sendRequest(values) {

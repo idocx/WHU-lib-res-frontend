@@ -39,10 +39,10 @@ const AppBody = styled.div`
 export default function App() {
   const [ text, setText ] = useState(""),
         [ busy, setBusy ] = useState(-1),
-        [ job , setJob  ] = useState(null),
         [     form      ] = Form.useForm();
   
-  var timer = useRef(null);
+  var timer = useRef(null),
+      job   = useRef(null);
 
   const defaultValues = getDefaultValue(),
         options       = getOptions();
@@ -53,8 +53,8 @@ export default function App() {
   const isBusy = Boolean(busy + 1);
 
   function clearTimer() {
-    if (timer) {
-      clearTimeout(timer);
+    if (timer.current) {
+      clearTimeout(timer.current);
     }
   }
 
@@ -71,34 +71,31 @@ export default function App() {
     form.setFieldsValue({ operation: "" });
   }
 
+  // add the job to the queue
+  // and wait for useEffect to handle
   function handleFinish(values) {
-    if (job) {
-      clearTimer()
-      setJob(getJob(
-        values, true, handleAfterFinish
-      ))
+    const handleJob = (cancel) => {
+      return getJob(values, cancel, handleAfterFinish)
+    }
+    if (job.current) {
+      job.current = handleJob(true)
       setBusy(0);
     } else {
-      setJob(getJob(
-        values, false, handleAfterFinish
-      ))
-      setBusy(
-        calculateWaitingTime(values)
-      );
+      job.current = handleJob(false)
+      setBusy(calculateWaitingTime(values));
     }
   }
   
+  // wait `busy` seconds and then submit the job
   useEffect(() => {
     clearTimer();
     if (busy > 0) {
-      timer = setTimeout(() => { 
-        setBusy((busy) => busy > 0 ? busy - 1 : busy)
+      timer.current = setTimeout(() => { 
+        setBusy((busy) => busy - 1)
       }, 1000)
-    } else {
-      if (job) {
-        job.request();
-        setJob(null)
-      }
+    } else if (job.current) {
+        job.current.request();
+        job.current = null  // clear the queue
     }
   }, [ busy ]);
 

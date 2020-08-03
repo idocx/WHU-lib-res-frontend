@@ -5,7 +5,6 @@
 ---
 
 ## Demo
+You can find a demo here.
 
-![](./demo/main.png)
-![](./demo/edit_page.png)
-![](./demo/scrollbar.png)
+https://idocx.github.io/WHU-lib-res-frontend/

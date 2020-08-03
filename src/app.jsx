@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Form } from "antd";
 
@@ -8,8 +8,8 @@ import styled from "styled-components";
 
 import UserInfoComponent from "./components/userInfo";
 import ResTimeSlider from "./components/time";
-import LibRoomCascader from "./components/libRoom";
-import SeatOptionRadios from "./components/seatOption";
+import LibRoomCascader from "./components/lib-room";
+import SeatOptionRadios from "./components/option";
 import OperationButtons from "./components/operation";
 import NoticeArea from "./components/notice";
 
@@ -21,17 +21,11 @@ const AppBody = styled.div`
   height: 570px;
   flex-direction: column;
   justify-content: space-between;
-  padding: 30px 30px 10px 30px;
+  padding: 30px 30px 0px 30px;
   background-color: #fafafa;
   border: 3px solid #f0f0f0;
   border-radius: 0 0 4px 4px;
   border-style:none solid solid solid;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   -webkit-app-region: no-drag;
 `;
 
@@ -116,29 +110,53 @@ const options = {
   ]
 }
 
-// TODO: Backend
+// TODO: Backend entrance
 function getDefaultValue() {
   return defaultValues;
 }
 
-export default function App() {
-  const defaultValues = getDefaultValue();
-  const [ text, setText ] = useState("");
+function calculateWaitingTime(values) {
+  return 10;
+}
 
-  const writeMessage = (message) => {
+function sendRequest(values) {
+  const message = JSON.stringify(values);
+  return message;
+}
+ 
+export default function App() {
+  const defaultValues = getDefaultValue(),
+        [ text, setText ] = useState(""),
+        [ busy, setBusy ] = useState(-1),
+        [ form ] = Form.useForm();
+  // busy represents remaining time for waiting
+  // busy === -1 enable form items
+  // else disable all of them
+  const isBusy = Boolean(busy + 1);
+
+  async function writeMessage(message) {
     setText(
       text + (text ? "\n" : "") + message
-    );
+    );    
   }
 
-  // TODO: Backend
-  const handleFinish = (values) => {
-    writeMessage(JSON.stringify(values));
+  const handleAfterFinish = (message) => {
+    writeMessage(message);
+    setBusy(-1);
+    form.setFieldsValue({ operation: "" });
   }
 
-  const [ form ] = Form.useForm();
+  function handleFinish(values) {
+    const waitingTime = calculateWaitingTime(values);
+    setBusy(waitingTime);
+    writeMessage(String(busy));
+    // writeMessage(JSON.stringify(values));
+      // .then((values) => {sendRequest(values)})
+      // .then((message)=>{ handleAfterFinish(message) });
+  }
 
   return (
+    <div id="app-body">
       <Form
         form={form}
         initialValues={defaultValues}
@@ -148,18 +166,23 @@ export default function App() {
           <FormItem
             name="userInfo"
           >
-            <UserInfoComponent />
+            <UserInfoComponent 
+              isBusy={isBusy}
+            />
           </FormItem>
           <FormItem
             name="startEndTime"
           >
-            <ResTimeSlider />
+            <ResTimeSlider 
+              isBusy={isBusy}
+            />
           </FormItem>
           <FormItem
             name="libRoom"
           >
             <LibRoomCascader 
               libRoomOptions={options.libRoomOptions}
+              isBusy={isBusy}
             />
           </FormItem>
           <FormItem
@@ -168,17 +191,24 @@ export default function App() {
             <SeatOptionRadios 
               windowOptions={options.windowOptions}
               pluggerOptions={options.pluggerOptions}
+              isBusy={isBusy}
             />
           </FormItem>
           <FormItem
             name="operation"  
           >
-            <OperationButtons />
+            <OperationButtons 
+              busy={busy}
+              isBusy={isBusy}
+            />
           </FormItem>
           <FormItem>
-            <NoticeArea text={text}/>
+            <NoticeArea 
+              text={text}
+            />
           </FormItem>
         </AppBody>
       </Form>
+    </div>
   )
 }

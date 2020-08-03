@@ -10,7 +10,7 @@ const ScrollCascader = styled(Cascader)`
   width: 100%;
 `;
 
-export default function LibRoomCascader({ value, id, onChange, libRoomOptions }) {
+export default function LibRoomCascader({ value, id, onChange, libRoomOptions, isBusy }) {
   return (
     <Row align="middle">
       <Col span={3}>
@@ -20,7 +20,9 @@ export default function LibRoomCascader({ value, id, onChange, libRoomOptions })
       </Col>
       <Col span={15}>
         <ScrollCascader
+          allowClear={false}
           id={id}
+          disabled={isBusy}
           expandTrigger="hover"
           placeholder="请选择"
           options={libRoomOptions}

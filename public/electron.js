@@ -4,6 +4,8 @@ let mainWindow;
 
 function createWindow () {
   mainWindow = new BrowserWindow({
+    width: 750,
+    height: 600,
     resizable: false,
     transparent: true,
     hasShadow: false,
@@ -12,11 +14,11 @@ function createWindow () {
     minimizable: false,
     webPreferences: {
       nodeIntegration: true,
-      preload: __dirname + '/preLoad.js'
+      preload: __dirname + '/preload.js'
     }
   })
-  // mainWindow.loadURL("http://localhost:3000/")
-  mainWindow.loadFile('./build/index.html')
+  mainWindow.loadURL("http://localhost:3000/")
+  // mainWindow.loadFile('./build/index.html')
 
   Menu.setApplicationMenu(null)
 

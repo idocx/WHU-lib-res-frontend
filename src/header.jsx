@@ -16,12 +16,6 @@ const AppHeader = styled.div`
   border-style:solid solid none solid;
   display: flex;
   display: -webkit-flex; /* Safari */
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   -webkit-app-region: drag;
 
   div.header-content {
@@ -46,14 +40,14 @@ const AppHeader = styled.div`
 
 export default function Header({ title }) {
   return (
-    <AppHeader id="dragable">
+    <AppHeader id="app-header">
       <div className="buttons header-content">
         <div className="closeWindow">
           <Button 
             type="text"
             size="small" 
             style={{ 
-              color: "#FF0000",
+              color: "#ff0000",
             }}
             icon={<CloseOutlined />}
             onClick={ () => { window.ipcRenderer.send("close"); }}

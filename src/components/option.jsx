@@ -10,12 +10,13 @@ const RadioSpace = styled(Space)`
   align-items: baseline;
 `;
 
-const CustomRadio = ({ name, options, value, onChange }) => {
+const CustomRadio = ({ name, options, value, onChange, busy, isBusy }) => {
   return (
     <RadioSpace size={30}>
       <label className="option-name">{name}</label> 
       <Radio.Group
         value={value}
+        disabled={isBusy}
         buttonStyle="solid"
         onChange={(e) => {
           onChange(e.target.value)
@@ -38,12 +39,13 @@ const CustomRadio = ({ name, options, value, onChange }) => {
   )
 }
 
-export default function SeatOptionRadios({ value, id, onChange, windowOptions, pluggerOptions }) {
+export default function SeatOptionRadios({ value, id, onChange, windowOptions, pluggerOptions, isBusy }) {
   return (
     <Row align="middle" id={id}>
       <Col span={12}>
         <CustomRadio
           name="是否靠窗"
+          isBusy={isBusy}
           value={value.window}
           options={windowOptions}
           onChange={(windowValue) => {
@@ -54,6 +56,7 @@ export default function SeatOptionRadios({ value, id, onChange, windowOptions, p
       <Col span={12}>
         <CustomRadio
           name="是否有插座"
+          isBusy={isBusy}
           value={value.plugger}
           options={pluggerOptions}
           onChange={(pluggerValue) => {

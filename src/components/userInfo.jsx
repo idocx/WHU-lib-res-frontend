@@ -16,7 +16,7 @@ const Description = styled.div`
   align-items: baseline;
 `;
 
-function UserInfoDescription({ username, openEditDrawer }) {
+function UserInfoDescription({ username, openEditDrawer, isBusy }) {
   return (
     <Description size={75}>
       <Row align={"middle"}>
@@ -30,7 +30,7 @@ function UserInfoDescription({ username, openEditDrawer }) {
         </Col>
         <Col xs={2} offset={3}>
           <Button 
-            type="secondary"
+            disabled={isBusy}
             shape="round"
             onClick={openEditDrawer} 
           >
@@ -73,7 +73,7 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, onChange }) {
     }
   }
 
-  const [form] = Form.useForm();
+  const [ form ] = Form.useForm();
 
   return (
     <Drawer
@@ -140,7 +140,7 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, onChange }) {
   )
 }
 
-export default function UserInfoComponent( { value, id, onChange} ) {
+export default function UserInfoComponent({ value, id, onChange, isBusy }) {
   const [editModeVisible, setEditModeVisible] = useState(false);
 
   const openEditDrawer = () => {
@@ -155,6 +155,7 @@ export default function UserInfoComponent( { value, id, onChange} ) {
       <UserInfoDescription id={id}
         username={value.username}
         openEditDrawer={openEditDrawer}
+        isBusy={isBusy}
       />
       <EditUserInfoDrawer
         visible={editModeVisible} 

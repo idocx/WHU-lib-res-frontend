@@ -11,13 +11,19 @@ import { createGlobalStyle } from "styled-components";
 const Style = createGlobalStyle`
   body {
     height:0;
-    background-color:transparent;
+    background-color: transparent;
     overflow-y: hidden;
   }
 
   #root {
-    width: 750px;
-    margin: auto;
+    max-width: 750px;
+    margin: 0 auto;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
   
   .option-name {
@@ -27,18 +33,19 @@ const Style = createGlobalStyle`
   }
 
   // style of scroll bar
-  ::-webkit-scrollbar-track {
-    background-color: none;
+  ::-webkit-scrollbar {
+    width: 5px;
   }
   ::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: #e5e5e5;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
   }
   ::-webkit-scrollbar-thumb:hover {
     background-color: #46a6ff;
   }
-  ::-webkit-scrollbar {
-    width: 7px;
+  ::-webkit-scrollbar-thumb:active {
+    background-color: #096dd9;
   }
 `;
 

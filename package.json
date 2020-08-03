@@ -1,12 +1,11 @@
 {
-  "name": "whu-lib-res",
+  "name": "speedy",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
   "main": "public/electron.js",
   "homepage": ".",
   "author": "idocx",
   "description": "electron-app",
-  "DEV": false,
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
     "antd": "^4.5.1",
@@ -33,9 +32,13 @@
     "win": {
       "target": [
       	"portable",
+      	"nsis",
         "zip"
       ],
       "icon": "build/icon.png"
+    },
+    "portable": {
+      "compression": "store"
     }
   },
   "scripts": {
@@ -44,8 +47,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron-start": "electron .",
-    "electron-pack": "electron-builder --dir",
-    "electron-dist": "electron-builder"
+    "electron-pack": "react-scripts build && electron-builder --dir",
+    "electron-dist": "react-scripts build && electron-builder"
   },
   "eslintConfig": {
     "extends": "react-app"

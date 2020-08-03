@@ -17,8 +17,6 @@ import {
   getDefaultValue, 
   getOptions,
   calculateWaitingTime, 
-  sendRequest,
-  translate,
   getJob
 } from "./utils";
 

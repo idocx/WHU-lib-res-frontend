@@ -22,16 +22,16 @@ const Buttons = styled(Row)`
 const OperationButton = ({ value, targetValue, busy, text, onChange, type="secondary" }) => {
   const hasTarget = Boolean(targetValue),
         isTarget = value === targetValue,  // is the button corresponding to current operation
-        isWaiting = isTarget & (busy > 0);  // is on waiting
+        isWaiting = isTarget && (busy > 0);  // is on waiting
 
   return (
     <Button 
       icon={isTarget ? <LoadingOutlined /> : ""}
-      // disabled={hasTarget & !isWaiting}
+      disabled={hasTarget && !isTarget}
       type={type}
       htmlType="submit" 
       shape="round"
-      value={isWaiting ? "cancel" : value}
+      value={value}
       onClick={() => {
         // when targetValue is empty, it mean the pipeline is free
         if (!targetValue) onChange(value)

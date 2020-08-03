@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import { Form } from "antd";
 
@@ -12,6 +12,15 @@ import LibRoomCascader from "./components/lib-room";
 import SeatOptionRadios from "./components/option";
 import OperationButtons from "./components/operation";
 import NoticeArea from "./components/notice";
+
+import { 
+  getDefaultValue, 
+  getOptions,
+  calculateWaitingTime, 
+  sendRequest,
+  translate,
+  getJob
+} from "./utils";
 
 const FormItem = Form.Item;
 
@@ -29,112 +38,30 @@ const AppBody = styled.div`
   -webkit-app-region: no-drag;
 `;
 
-const defaultValues = {
-  userInfo: {
-    username: "201543321543"
-  },
-  startEndTime: {
-    startTime: 600,
-    endTime: 720
-  },
-  libRoom: {
-    lib: 0,
-    room: 12
-  },
-  seatOptions: {
-    window: 0,
-    plugger: 0
-  }
-}
-
-const options = {  
-  libRoomOptions: [
-    {
-      value: 0,
-      label: "总馆",
-      children: [
-        {
-          value: 11,
-          label: "A1"
-        },
-        {
-          value: 12,
-          label: "A2"
-        },
-        {
-          value: 13,
-          label: "A3"
-        },
-        {
-          value: 14,
-          label: "A4"
-        },
-        {
-          value: 15,
-          label: "A5"
-        },
-        {
-          value: 16,
-          label: "E1"
-        },
-        {
-          value: 17,
-          label: "E2"
-        }
-      ]
-    },
-    {
-      value: 1,
-      label: "信图",
-      children: [
-        {
-          value: 21,
-          label: "不知道"
-        }
-      ]
-    },
-    {
-      value: 2,
-      label: "不限场馆"
-    }
-  ],
-  windowOptions: [
-    {value: 1, "label": "靠窗"},  
-    {value: 2, "label": "不靠窗"},
-    {value: 0, "label": "不限"}
-  ],
-  pluggerOptions: [
-    {value: 1, "label": "有插座"},
-    {value: 2, "label": "无插座"},
-    {value: 0, "label": "不限"}
-  ]
-}
-
-// TODO: Backend entrance
-function getDefaultValue() {
-  return defaultValues;
-}
-
-function calculateWaitingTime(values) {
-  return 10;
-}
-
-function sendRequest(values) {
-  const message = JSON.stringify(values);
-  return message;
-}
- 
 export default function App() {
-  const defaultValues = getDefaultValue(),
-        [ text, setText ] = useState(""),
+  const [ text, setText ] = useState(""),
         [ busy, setBusy ] = useState(-1),
-        [ form ] = Form.useForm();
+        [ job , setJob  ] = useState(null),
+        [     form      ] = Form.useForm();
+  
+  var timer = useRef(null);
+
+  const defaultValues = getDefaultValue(),
+        options       = getOptions();
+  
   // busy represents remaining time for waiting
   // busy === -1 enable form items
   // else disable all of them
   const isBusy = Boolean(busy + 1);
 
-  async function writeMessage(message) {
+  function clearTimer() {
+    if (timer) {
+      clearTimeout(timer);
+    }
+  }
+
+  // show message in the notice component
+  function writeMessage(message) {
     setText(
       text + (text ? "\n" : "") + message
     );    
@@ -147,13 +74,35 @@ export default function App() {
   }
 
   function handleFinish(values) {
-    const waitingTime = calculateWaitingTime(values);
-    setBusy(waitingTime);
-    writeMessage(String(busy));
-    // writeMessage(JSON.stringify(values));
-      // .then((values) => {sendRequest(values)})
-      // .then((message)=>{ handleAfterFinish(message) });
+    if (job) {
+      clearTimer()
+      setJob(getJob(
+        values, true, handleAfterFinish
+      ))
+      setBusy(0);
+    } else {
+      setJob(getJob(
+        values, false, handleAfterFinish
+      ))
+      setBusy(
+        calculateWaitingTime(values)
+      );
+    }
   }
+  
+  useEffect(() => {
+    clearTimer();
+    if (busy > 0) {
+      timer = setTimeout(() => { 
+        setBusy((busy) => busy > 0 ? busy - 1 : busy)
+      }, 1000)
+    } else {
+      if (job) {
+        job.request();
+        setJob(null)
+      }
+    }
+  }, [ busy ]);
 
   return (
     <div id="app-body">

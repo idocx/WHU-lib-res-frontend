@@ -50,7 +50,7 @@ const Style = createGlobalStyle`
 `;
 
 const title = "武汉大学图书馆座位预约助手";
-const type = "web";
+const type = "desktop";
 
 function Root() {
   return (

@@ -1,14 +1,12 @@
 import React from "react";
 
 import { Button, Row, Col } from "antd";
-
 import { LoadingOutlined } from "@ant-design/icons"
-
 import "antd/dist/antd.css";
 
 import styled from "styled-components";
 
-import { formatTime } from "./time";
+import { formatTime } from "../utils";
 
 const Buttons = styled(Row)`
   margin: 0 18%;

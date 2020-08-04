@@ -45,6 +45,8 @@ function UserInfoDescription({ username, openEditDrawer, isBusy }) {
 function EditUserInfoDrawer({ visible, closeEditDrawer, onChange }) {
   var usernameInputRef = useRef(null),
       confirmButtonRef = useRef(null);
+  
+  const [ form ] = Form.useForm();
 
   const handleClose = () => {
     closeEditDrawer();
@@ -73,8 +75,6 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, onChange }) {
     }
   }
 
-  const [ form ] = Form.useForm();
-
   return (
     <Drawer
     title="修改个人信息"
@@ -101,7 +101,7 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, onChange }) {
         }]}
       >
         <Input 
-          ref={(input) => usernameInputRef = input} 
+          ref={(input) => { usernameInputRef =input }} 
           placeholder="请输入学号" 
         />
       </FormItem>
@@ -120,7 +120,7 @@ function EditUserInfoDrawer({ visible, closeEditDrawer, onChange }) {
           type="primary" 
           htmlType="submit" 
           shape={"round"}
-          ref={(confirm) => confirmButtonRef = confirm}
+          ref={(button) => { confirmButtonRef = button }}
         >
           确认
         </Button>

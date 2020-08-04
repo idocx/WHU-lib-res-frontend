@@ -1,7 +1,6 @@
 import React from "react";
 
 import { Radio, Space, Col, Row } from 'antd';
-
 import "antd/dist/antd.css";
 
 import styled from "styled-components";
@@ -10,7 +9,7 @@ const RadioSpace = styled(Space)`
   align-items: baseline;
 `;
 
-const CustomRadio = ({ name, options, value, onChange, busy, isBusy }) => {
+const CustomRadio = ({ name, options, value, onChange, isBusy }) => {
   return (
     <RadioSpace size={30}>
       <label className="option-name">{name}</label> 

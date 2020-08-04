@@ -79,6 +79,12 @@ const options = {
   ]
 }
 
+function formatTime(value) {
+  const value_60 = String(Math.floor(value / 60)).padStart(2, '0'),
+        value__60 = String(value - value_60 * 60).padStart(2, '0');
+  return `${value_60}:${value__60}`
+}
+
 function translate(value) {
   switch (value) {
     case "check":
@@ -92,32 +98,48 @@ function translate(value) {
   }
 }
 
-function getJob(values, cancel, callback) {
-  const handleRequest = async () => {
-    return new Promise((resolve) => {
-      resolve();
-    })
-      .then(() => {
-        if (cancel) {
-          return `${translate(values.operation)}操作已取消`
-        } 
-        else {
-          return sendRequest(values)
-        }
-      })
-      .then((response) => {
-        callback(response);
-      })
-  }
-  return { 
-    name: cancel ? "cancel" : values.operation,
-    request() {
-      handleRequest();
+function getJob(values, oldJob, writeMessage) {
+  // STOP PENDING
+  if (oldJob && values.operation && oldJob.name === values.operation) {
+    return {
+      name: "cancel",
+      pendingTime: 0,
+      request() {
+        return stopPending(values, writeMessage);
+      }
+    }
+  } 
+  // NORMAL REQUEST 
+  else if (!oldJob && values.operation) {
+    return {
+      name: values.operation,
+      pendingTime: calculateWaitingTime(values),
+      request() {
+        return submitRequest(values, writeMessage)
+      }
     }
   }
 }
 
-// TODO: Backend entrance
+function stopPending(values, writeMessage) {
+  return new Promise((resolve) => {
+    writeMessage(`${translate(values.operation)}操作已取消`)
+    resolve();
+  })
+}
+
+function submitRequest(values, writeMessage) {
+  const request = () => {
+    // CASE 1: conduct reservation
+    const message = JSON.stringify(values);
+    writeMessage(message);
+  }
+  return new Promise((resolve) => {
+    request()
+    resolve()
+  })
+}
+
 function getDefaultValue() {
   return defaultValues;
 }
@@ -130,16 +152,10 @@ function calculateWaitingTime(values) {
   return 3;
 }
 
-function sendRequest(values) {
-  const message = JSON.stringify(values);
-  return message;
-}
-
 export { 
   getDefaultValue, 
   getOptions,
-  calculateWaitingTime, 
-  sendRequest,
+  formatTime,
   translate,
   getJob
 };

@@ -1,7 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 
 import { Form } from "antd";
-
 import "antd/dist/antd.css";
 
 import styled from "styled-components";
@@ -16,7 +15,6 @@ import NoticeArea from "./components/notice";
 import { 
   getDefaultValue, 
   getOptions,
-  calculateWaitingTime, 
   getJob
 } from "./utils";
 
@@ -52,12 +50,6 @@ export default function App() {
   // else disable all of them
   const isBusy = Boolean(busy + 1);
 
-  function clearTimer() {
-    if (timer.current) {
-      clearTimeout(timer.current);
-    }
-  }
-
   // show message in the notice component
   function writeMessage(message) {
     setText(
@@ -65,26 +57,28 @@ export default function App() {
     );    
   }
 
-  const handleAfterFinish = (message) => {
-    writeMessage(message);
-    setBusy(-1);
-    form.setFieldsValue({ operation: "" });
+  function clearTimer() {
+    if (timer.current) {
+      clearTimeout(timer.current);
+    }
   }
 
   // add the job to the queue
   // and wait for useEffect to handle
   function handleFinish(values) {
-    const handleJob = (cancel) => {
-      return getJob(values, cancel, handleAfterFinish)
-    }
-    if (job.current) {
-      job.current = handleJob(true)
-      setBusy(0);
-    } else {
-      job.current = handleJob(false)
-      setBusy(calculateWaitingTime(values));
-    }
+    job.current = getJob(
+      values, 
+      job.current, 
+      writeMessage
+    )
+    setBusy(job.current.pendingTime);
   }
+  
+  const handleAfterFinish = useCallback(() => {
+    setBusy(-1);
+    form.setFieldsValue({ operation: "" });
+    job.current = null;
+  }, [])
   
   // wait `busy` seconds and then submit the job
   useEffect(() => {
@@ -94,8 +88,8 @@ export default function App() {
         setBusy((busy) => busy - 1)
       }, 1000)
     } else if (job.current) {
-        job.current.request();
-        job.current = null  // clear the queue
+        job.current.request()
+          .then(() => { handleAfterFinish() });
     }
   }, [ busy ]);
 

@@ -2,7 +2,6 @@ import React from "react";
 
 import { Button } from 'antd';
 import { CloseOutlined, MinusOutlined  } from '@ant-design/icons';
-
 import "antd/dist/antd.css";
 
 import styled from "styled-components";

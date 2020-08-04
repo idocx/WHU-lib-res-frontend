@@ -5,15 +5,15 @@ import "antd/dist/antd.css";
 
 import styled from "styled-components";
 
-const TimeSlider = styled.div`
-  margin-bottom: 5px
-`;
+import { formatTime } from "../utils";
 
-export function formatTime(value) {
-  const value_60 = String(Math.floor(value / 60)).padStart(2, '0'),
-        value__60 = String(value - value_60 * 60).padStart(2, '0');
-  return `${value_60}:${value__60}`
-}
+const TimeSlider = styled.div`
+  margin-bottom: 5px;
+
+  .bold-tag {
+    font-weight: 500;
+  }
+`;
 
 export default function ResTimeSlider({ value, id, onChange, isBusy }) {
   const minTime = 480,
@@ -78,9 +78,19 @@ export default function ResTimeSlider({ value, id, onChange, isBusy }) {
           />
         </Col>
         <Col span={5} offset={1}>
-          <Tag color={isBusy ? "" : "red"}>{formatTime(value_[0])}</Tag>
+          <Tag 
+            color={isBusy ? "" : "red"}
+            className="bold-tag"
+          >
+            {formatTime(value_[0])}
+          </Tag>
           <span style={{ margin: "0 8px 0 0"}}>~</span>
-          <Tag color={isBusy ? "" : "geekblue"}>{formatTime(value_[1])}</Tag>
+          <Tag 
+            color={isBusy ? "" : "geekblue"}
+            className="bold-tag"
+          >
+            {formatTime(value_[1])}
+          </Tag>
         </Col>
       </Row>
     </TimeSlider>

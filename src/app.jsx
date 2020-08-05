@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import { Form } from "antd";
 import "antd/dist/antd.css";
@@ -57,12 +57,6 @@ export default function App() {
     );    
   }
 
-  function clearTimer() {
-    if (timer.current) {
-      clearTimeout(timer.current);
-    }
-  }
-
   // add the job to the queue
   // and wait for useEffect to handle
   function handleFinish(values) {
@@ -74,24 +68,25 @@ export default function App() {
     setBusy(job.current.pendingTime);
   }
   
-  const handleAfterFinish = useCallback(() => {
-    setBusy(-1);
-    form.setFieldsValue({ operation: "" });
-    job.current = null;
-  }, [])
-  
   // wait `busy` seconds and then submit the job
   useEffect(() => {
-    clearTimer();
+    // clear timer
+    if (timer.current) {
+      clearTimeout(timer.current);
+    }
     if (busy > 0) {
       timer.current = setTimeout(() => { 
         setBusy((busy) => busy - 1)
       }, 1000)
     } else if (job.current) {
         job.current.request()
-          .then(() => { handleAfterFinish() });
+          .then(() => {
+            setBusy(-1);
+            form.setFieldsValue({ operation: "" });
+            job.current = null;
+          });
     }
-  }, [ busy ]);
+  }, [ busy, form ]);
 
   return (
     <div id="app-body">

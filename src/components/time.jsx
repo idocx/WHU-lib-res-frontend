@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import { Slider, Tag, Row, Col } from "antd";
 import "antd/dist/antd.css";
@@ -36,6 +36,8 @@ export default function ResTimeSlider({ value, id, onChange, isBusy }) {
 
   const [ value_, setValue ] = useState([ value.startTime, value.endTime ])
 
+  var prevValue = useRef(value_)
+
   const handleChange = values => {
     setValue(values)
     onChange({ startTime: values[0], endTime: values[1] });
@@ -45,13 +47,14 @@ export default function ResTimeSlider({ value, id, onChange, isBusy }) {
     // when startTime === endTime
     if (values[0] === values[1]) {
 
-      if (values[1] <= maxTime - 30) {
+      if (prevValue.current[1] === values[1] || values[0] === minTime) {
         values[1] += 30;
       } 
-      else if (values[0] >= minTime + 30) {
+      else if (prevValue.current[0] === values[0] || values[1] === maxTime) {
         values[0] -= 30;
       }
       handleChange(values);
+      prevValue.current = values
     };
   }
   return (

@@ -19,7 +19,7 @@ const Buttons = styled(Row)`
 
 const OperationButton = ({ value, targetValue, busy, text, onChange, type="secondary" }) => {
   const hasTarget = Boolean(targetValue),
-        isTarget = value === targetValue,  // is the button corresponding to current operation
+        isTarget  = value === targetValue,  // is the button corresponding to current operation
         isWaiting = isTarget && (busy > 0);  // is on waiting
 
   return (

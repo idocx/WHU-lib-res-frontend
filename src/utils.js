@@ -114,10 +114,13 @@ function getJob(values, oldJob, writeMessage) {
     return {
       name: values.operation,
       pendingTime: calculateWaitingTime(values),
+
       request() {
         return submitRequest(values, writeMessage)
       }
     }
+  } else {
+    return {}
   }
 }
 
@@ -130,7 +133,6 @@ function stopPending(values, writeMessage) {
 
 function submitRequest(values, writeMessage) {
   const request = () => {
-    // CASE 1: conduct reservation
     const message = JSON.stringify(values);
     writeMessage(message);
   }
@@ -156,6 +158,5 @@ export {
   getDefaultValue, 
   getOptions,
   formatTime,
-  translate,
   getJob
 };

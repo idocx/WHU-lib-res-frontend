@@ -52,19 +52,13 @@ export default function App() {
 
   // show message in the notice component
   function writeMessage(message) {
-    setText(
-      text + (text ? "\n" : "") + message
-    );    
+    setText(text + (text ? "\n" : "") + message);    
   }
 
   // add the job to the queue
   // and wait for useEffect to handle
   function handleFinish(values) {
-    job.current = getJob(
-      values, 
-      job.current, 
-      writeMessage
-    )
+    job.current = getJob(values, job.current, writeMessage);
     setBusy(job.current.pendingTime);
   }
   
@@ -81,9 +75,10 @@ export default function App() {
     } else if (job.current) {
         job.current.request()
           .then(() => {
+            // free all the components
+            job.current = null;
             setBusy(-1);
             form.setFieldsValue({ operation: "" });
-            job.current = null;
           });
     }
   }, [ busy, form ]);
@@ -132,7 +127,6 @@ export default function App() {
           >
             <OperationButtons 
               busy={busy}
-              isBusy={isBusy}
             />
           </FormItem>
           <FormItem>

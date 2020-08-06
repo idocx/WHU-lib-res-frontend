@@ -32,13 +32,9 @@
     "win": {
       "target": [
       	"portable",
-      	"nsis",
-        "zip"
+      	"nsis"
       ],
       "icon": "build/icon.png"
-    },
-    "portable": {
-      "compression": "store"
     }
   },
   "scripts": {

@@ -1,6 +1,9 @@
 # WHU座位预约脚本前端组件
 
-### 目前UI设计部分已经完成，接下来准备写组件之间的逻辑
+[![time tracker](https://wakatime.com/badge/github/idocx/WHU-lib-res-frontend.svg)](https://wakatime.com/badge/github/idocx/WHU-lib-res-frontend) [![Known Vulnerabilities](https://snyk.io/test/github/idocx/WHU-lib-res-frontend/badge.svg)](https://snyk.io/test/github/{username}/{repo})
+
+
+### 目前前端已经完成，之后会完成后端的设计
 
 ---
 

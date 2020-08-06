@@ -17,8 +17,8 @@ function createWindow () {
       preload: __dirname + '/preload.js'
     }
   })
-  mainWindow.loadURL("http://localhost:3000/")
-  // mainWindow.loadFile('./build/index.html')
+  // mainWindow.loadURL("http://localhost:3000/")
+  mainWindow.loadFile('./build/index.html')
 
   Menu.setApplicationMenu(null)
 
